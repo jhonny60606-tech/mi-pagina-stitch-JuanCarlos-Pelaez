@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Espacio del Respiro - Psicólogo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:wght@400;600;700&display=swap');
+        
+        /* Entrance Reveals */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered reveals for multiple elements */
+        .fade-in-stagger > * {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .fade-in-stagger.visible > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .fade-in-stagger.visible > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .fade-in-stagger.visible > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .fade-in-stagger.visible > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+        /* Interactive Cards - Inner Light Sweep & Zoom */
+        .interactive-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.6s ease;
+        }
+
+        .interactive-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            transition: none;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 24px 48px rgba(14,29,37,0.15);
+        }
+
+        .interactive-card:hover::after {
+            animation: sweep 1.2s ease-in-out;
+        }
+
+        @keyframes sweep {
+            0% { left: -150%; }
+            100% { left: 200%; }
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: -5%; /* slightly larger for zoom effect */
+            background-size: cover;
+            background-position: center;
+            transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 0;
+        }
+
+        .interactive-card:hover .card-bg {
+            transform: scale(1.08);
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+        }
+
+        /* Atmospheric Motion - Floating */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Button Shimmer */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+        
+        /* Interactive Nav Links */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+    </style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-secondary-container": "#556474",
+                "tertiary-fixed": "#e5e2dd",
+                "surface-dim": "#ccdce7",
+                "surface": "#f4faff",
+                "secondary-fixed-dim": "#b8c8da",
+                "on-error-container": "#93000a",
+                "tertiary": "#5f5e5b",
+                "surface-container-lowest": "#ffffff",
+                "surface-tint": "#4e635a",
+                "primary-fixed": "#d1e8dd",
+                "primary-fixed-dim": "#b5ccc1",
+                "primary-container": "#8da399",
+                "on-tertiary-fixed": "#1c1c19",
+                "on-background": "#0e1d25",
+                "on-surface": "#0e1d25",
+                "inverse-primary": "#b5ccc1",
+                "surface-container-low": "#e7f6ff",
+                "on-tertiary-container": "#363632",
+                "on-primary-fixed": "#0b1f18",
+                "primary": "#4e635a",
+                "on-secondary-fixed": "#0d1d2a",
+                "on-primary": "#ffffff",
+                "background": "#f4faff",
+                "on-primary-container": "#263932",
+                "tertiary-fixed-dim": "#c9c6c2",
+                "secondary": "#50606f",
+                "outline-variant": "#c2c8c4",
+                "on-tertiary-fixed-variant": "#474743",
+                "surface-container": "#e0f0fb",
+                "on-secondary-fixed-variant": "#394857",
+                "inverse-on-surface": "#e3f3fd",
+                "surface-variant": "#d5e5ef",
+                "on-primary-fixed-variant": "#374b43",
+                "inverse-surface": "#23323a",
+                "tertiary-container": "#a09e9a",
+                "outline": "#727875",
+                "error": "#ba1a1a",
+                "surface-container-high": "#daebf5",
+                "on-surface-variant": "#424845",
+                "on-error": "#ffffff",
+                "surface-container-highest": "#d5e5ef",
+                "on-secondary": "#ffffff",
+                "secondary-fixed": "#d4e4f6",
+                "secondary-container": "#d1e1f4",
+                "on-tertiary": "#ffffff",
+                "surface-bright": "#f4faff",
+                "error-container": "#ffdad6"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "xs": "4px",
+                "sm": "12px",
+                "md": "24px",
+                "container-max": "1200px",
+                "lg": "48px",
+                "margin-mobile": "20px",
+                "gutter": "24px",
+                "base": "8px",
+                "xl": "80px"
+        },
+        "fontFamily": {
+                "headline-lg": [
+                        "Noto Serif"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Noto Serif"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-xl-mobile": [
+                        "Noto Serif"
+                ],
+                "headline-xl": [
+                        "Noto Serif"
+                ],
+                "caption": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-xl": [
+                        "48px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "caption": [
+                        "12px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Serif:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md fixed top-0 w-full z-50 bg-surface-container-lowest/50 shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center px-md py-sm max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">
+                El Espacio del Respiro
+            </div>
+<div class="hidden md:flex gap-md items-center"><a class="text-primary font-bold nav-link pb-1 transition-colors duration-300" href="#">Inicio</a><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary nav-link transition-colors duration-300" href="#about">Sobre mí</a><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary nav-link transition-colors duration-300" href="#services">Servicios</a><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary nav-link transition-colors duration-300" href="#contact">Contacto</a></div>
+<a class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-surface-tint btn-shimmer transition-all duration-300 ease-in-out hidden md:block inline-flex items-center justify-center" href="https://wa.me/59175358437?text=Hola,%20me%20gustaría%20agendar%20una%20cita" target="_blank">
+                Agendar Cita
+            </a>
+<button class="md:hidden text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-[80px]"> <!-- Offset for fixed nav -->
+<!-- Hero Section -->
+<section class="py-xl md:py-[120px] px-margin-mobile md:px-md max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-6 flex flex-col items-start gap-lg fade-in z-10 visible">
+<div class="flex flex-col gap-sm">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-widest">Psicología Clínica</span>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-surface">Comprender tu historia es el primer paso para transformar tu vida.</h1>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[90%]">
+                        Acompañamiento profesional para encontrar equilibrio y bienestar en tu vida. Un lugar seguro para explorar tus pensamientos y emociones.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md w-full sm:w-auto mt-sm">
+<a class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-md text-label-md hover:bg-surface-tint hover:-translate-y-1 btn-shimmer transition-all duration-300 shadow-[0_8px_24px_rgba(78,99,90,0.15)] w-full sm:w-auto inline-flex items-center justify-center" href="https://wa.me/59175358437?text=Hola,%20me%20gustaría%20agendar%20una%20cita" target="_blank">
+                            Agendar Sesión
+                        </a>
+<button class="border-[1.5px] border-secondary text-secondary px-8 py-4 rounded-lg font-label-md text-label-md hover:bg-secondary/5 hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto">
+                            Saber Más
+                        </button>
+</div>
+</div>
+<div class="md:col-span-6 relative mt-xl md:mt-0 fade-in visible" style="transition-delay: 0.2s;">
+<!-- Decorative background element -->
+<div class="absolute -inset-4 bg-tertiary-fixed rounded-[2rem] transform rotate-3 -z-10 opacity-70"></div>
+<img alt="Professional portrait of the psychologist" class="rounded-xl w-full h-auto object-cover aspect-[3/4] shadow-[0_20px_40px_rgba(14,29,37,0.08)]" src="https://lh3.googleusercontent.com/aida/AP1WRLsDgKeLfvf-OwTse3y9gO1mUj2hothOo3pVb7ounY-2qJRoBho_fyKvT4Yj4EC3uSu1NuN4JnBzdpcE_XMLKfGoOT9HeJVF8CJQP-A3FaMVikj7b5PjLKroys8nxQYRW2Vz5h842oxl6MHP__sJJzuwqsRaa2yT8h38lfl0eaHlZs4T6HqkCryCnlohvNyt0TOG8qRe2pt_ViuF0BSCRtGIkvxrv8sxd8TaKqAyXxrZNgmWcxbDLJCLug"/>
+</div>
+</div>
+</section>
+<!-- Services Section (Bento Grid) -->
+<section class="py-xl bg-surface-container-low overflow-hidden" id="services">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-md">
+<div class="text-center mb-xl fade-in visible">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Áreas de Enfoque</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[600px] mx-auto">
+                        Terapia especializada adaptada a tus necesidades individuales en un entorno seguro y confidencial.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter fade-in-stagger visible">
+<!-- Card 1 -->
+<div class="interactive-card border border-surface-variant min-h-[350px]">
+<div class="card-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5OJyddnSozmPUQ6iTnCfP_jHkW_4sBrHq78U7V45lmZ1jpjplZK008Y-yclYU8xtXtSLpFvmuQDqY7_QYt4cPAOiiOuHKNmmOs5-GIC9OrRfkyg49lQnEPTI4l1AfVc8V_FyWlijSHtEzzgFPplLl87wEmRYTWdW_uAsfbKjEtxNkI_YhpRf7L2b2zbTdrV_9Xz055A3BKDF4ESxoXV6qhR2FMxpdjLc_hcMEi57mwd1q2ebdJbGkW7EIW2Lhdobmv703BP345w');"></div>
+<div class="card-content p-xl flex flex-col justify-end">
+<div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-lg"><span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 0;">person</span></div><h3 class="font-headline-md text-headline-md text-white mb-sm">Terapia Individual</h3><p class="font-body-md text-body-md text-white/90">Espacio personal para explorar inquietudes, gestionar la ansiedad y fomentar el desarrollo personal.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="interactive-card border border-surface-variant min-h-[350px]">
+<div class="card-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJVzfZKWEf1aL3Jzb03zR2MKCIwtwnwXFyYCfcw-efL5lWZh2_Hqskxt3qMQb21QDpoQzT3Oy1XB9aOGiSucLMfIyWmSn8muOp1MqkHFcXjwCH1GvyRjmTKeQDotxYfx6sWckck4XLZV0FTqwfG3xJpvDiTdROYg-US68mVeEAAQ6nKEUs-RQ8JgeDfxDto3Suyv4LWkaFrR8_dfOOaH-uZksUETqIDcE4Mr1lqP5Bb9E1vBoGZjc6RbPIrp7yqlrVrisKrd_pzg');"></div>
+<div class="card-content p-xl flex flex-col justify-end">
+<div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-lg"><span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 0;">favorite</span></div><h3 class="font-headline-md text-headline-md text-white mb-sm">Terapia de Pareja</h3><p class="font-body-md text-body-md text-white/90">Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo afectivo.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="interactive-card border border-surface-variant min-h-[350px]">
+<div class="card-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVECjZ83K8qJfL6vu3VRYTSkde7Q18tWFhGGIDMHvYJDbIQ4uutxbWW49DLpyL7KQOAXEoH4OXD6I6IsZwh4LOeAaPm50vZzggZx_Nmrqtg_hTV7TivN67TnttDcd4WNGiFxrrnZ08CjPLnHUupHrj3RSUiKL6xMgqATKeuRbltdozqRimDYyJkOAbEOLt5L0idGZDgdbTI7hwI0OFVreT3DlzUOG4ceqmgGUts87gOQKf3KwZvcSfcRaR0lUnoI9KqgycQJDkTA');"></div>
+<div class="card-content p-xl flex flex-col justify-end">
+<div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-lg"><span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 0;">psychology</span></div><h3 class="font-headline-md text-headline-md text-white mb-sm">Ansiedad y Estrés</h3><p class="font-body-md text-body-md text-white/90">Técnicas probadas para reducir la abrumación y recuperar el control sobre tu bienestar diario.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Professional Focus Section -->
+<section class="py-xl md:py-[120px] px-margin-mobile md:px-md max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-7 order-2 md:order-1 fade-in visible">
+<img alt="Psychologist in session" class="rounded-xl w-full h-auto object-cover aspect-[16/9] shadow-[0_20px_40px_rgba(14,29,37,0.08)] hover:scale-[1.02] transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUeQr8MDbt5ftH0LjHoWCTcdWMWE7Dat6HV0qAZ3UwsNb7zTGAn8di2K3Lzoa4BWOU7GbzqRsaxo8-KwNviJhFk0kcxh6d06in_n8H-ATvazmeGpDJfqSqJTN_aYgtFG2Jk1TGcPwOmzzdGf57nepyY-SA3fcEjDMhCpYp3Cet7bcv9OEIZfU482yWn0ZuhhMlXNeKumalJ6zfm1CuB9FCScsor2Zp3IE_nqh9YozqBcTrdM7JY9Z2HFid3KkhZwJRHn4XAZdiQg"/>
+</div>
+<div class="md:col-span-5 order-1 md:order-2 flex flex-col gap-lg pl-0 md:pl-md fade-in visible" style="transition-delay: 0.2s;">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Un Enfoque Humano y Profesional</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                        Basado en la empatía y la evidencia científica, mi objetivo es proporcionarte las herramientas necesarias para navegar las dificultades de la vida.
+                    </p>
+<ul class="flex flex-col gap-sm fade-in-stagger visible">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Entorno de total confidencialidad</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Terapias basadas en evidencia (TCC)</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Atención personalizada y flexible</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Quote Section -->
+<section class="py-xl px-margin-mobile md:px-md max-w-container-max mx-auto fade-in visible">
+<div class="flex justify-center w-full floating-element">
+<img alt="A full-screen, high-end digital collage for a psychology practice" class="w-full h-auto block shadow-lg rounded-lg" src="https://lh3.googleusercontent.com/aida/AP1WRLsiliExbXL5LBcHxDT22jkaduPZ0n4xw4cI-Zk4tOc6SykKfsTrDvTWlYzXDMbQnWEHqKT3djMMPN-uCRSZdGpOtd_398Er9CRsTjaVovegY6yxir7ePh3i0JIV-6B0D0SU_urixqWPAbyGJJBEI02muPYPeX5JD_oXn95bjmKxQflMOoNKH9Xbrhu0hCCNSGMpayERP9a2yNCDocIhf1gn1sonSpF1r1ytgIC3N7ZHSCo58R7xvPxI"/>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-tertiary-fixed dark:bg-inverse-surface w-full py-xl text-on-tertiary-fixed dark:text-inverse-on-surface font-body-md text-body-md flex flex-col md:flex-row justify-between items-start gap-gutter px-margin-mobile md:px-xl max-w-container-max mx-auto flat no shadows ease-in-out transition-all duration-300 fade-in visible" id="contact">
+<div class="flex flex-col gap-md max-w-[300px]">
+<div class="font-headline-md text-headline-md text-primary">Juan Carlos Peláez</div><div class="font-label-md text-label-md text-secondary uppercase tracking-widest">Psicólogo Clínico</div>
+<p class="text-on-tertiary-fixed-variant dark:text-surface-variant italic">
+                'Tu salud mental es una prioridad. Tu felicidad es esencial. Tu autocuidado es una necesidad.'
+            </p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wider mb-sm">Contacto</h4>
+<div class="flex flex-col gap-sm"><div class="text-on-tertiary-fixed-variant dark:text-surface-variant flex items-center gap-sm"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">call</span> Teléfono 1: +591 75358437</div><div class="text-on-tertiary-fixed-variant dark:text-surface-variant flex items-center gap-sm"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">call</span> Teléfono 2: +591 7860698</div></div>
+<div class="text-on-tertiary-fixed-variant dark:text-surface-variant flex items-start gap-sm"><span class="material-symbols-outlined text-sm mt-1" style='font-variation-settings: "FILL" 0;'>location_on</span> Ubicación: Edif. Top Center p/11 of. G, Av. Beni entre 2do y 1er anillo</div>
+</div>
+<div class="w-full md:w-auto mt-lg md:mt-0 text-sm text-on-tertiary-fixed-variant dark:text-surface-variant opacity-70">© 2024 Juan Carlos Pel!ez. Todos los derechos reservados. | Dise!o web por Jhonny Rosas Valda</div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in, .fade-in-stagger').forEach((el) => {
+                // Remove visible class initially if it was there
+                el.classList.remove('visible');
+                observer.observe(el);
+            });
+        });
+    </script>
+</body></html>
